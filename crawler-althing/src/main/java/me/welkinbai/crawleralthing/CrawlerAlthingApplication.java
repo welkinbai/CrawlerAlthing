@@ -11,5 +11,6 @@ public class CrawlerAlthingApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CrawlerAlthingApplication.class, args);
+        LOGGER.info("启动完毕...");
     }
 }
