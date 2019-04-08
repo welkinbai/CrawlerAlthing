@@ -1,17 +1,17 @@
 package me.welkinbai.crawleralthing.path;
 
-public class ListPath implements Path {
-    private String url;
-
+public class ListPath extends AbstractPath implements Path {
     public ListPath(String url) {
-        this.url = url;
+        super(url);
     }
 
-    public String getUrl() {
-        return url;
+    @Override
+    public String toString() {
+        return "ListPath{} " + super.toString();
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    @Override
+    public PathType getPathType() {
+        return PathType.LIST_PATH;
     }
 }

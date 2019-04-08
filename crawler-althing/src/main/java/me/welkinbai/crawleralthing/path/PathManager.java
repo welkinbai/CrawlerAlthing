@@ -6,13 +6,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.BlockingDeque;
+import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 @Component
 public class PathManager {
-    private BlockingDeque<Path> targetPathQueue = new LinkedBlockingDeque<>();
+    private Map<Integer, BlockingQueue<Path>> targetPathQueueMap = new HashMap<>();
 
     @Autowired
     private PathPool pathPool;
@@ -21,9 +23,16 @@ public class PathManager {
     public void init() {
         List<String> listPaths = pathPool.getList();
         if (!CollectionUtils.isEmpty(listPaths)) {
+            LinkedBlockingDeque<Path> listPathDeque = new LinkedBlockingDeque<>();
             for (String listPath : listPaths) {
-                targetPathQueue.offer(new ListPath(listPath));
+                listPathDeque.offer(new ListPath(listPath));
             }
+            targetPathQueueMap.put(PathType.LIST_PATH.getCode(), listPathDeque);
         }
+    }
+
+    public Path pollPath(PathType pathType) {
+        BlockingQueue<Path> paths = targetPathQueueMap.get(pathType.getCode());
+        return paths == null ? null : paths.poll();
     }
 }
