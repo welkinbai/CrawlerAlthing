@@ -19,4 +19,11 @@ public class RawPath extends AbstractPath implements Path {
     public PathType getPathType() {
         return PathType.RAW_PATH;
     }
+
+    @Override
+    public String toString() {
+        return "RawPath{" +
+                "title='" + title + '\'' +
+                "} " + super.toString();
+    }
 }

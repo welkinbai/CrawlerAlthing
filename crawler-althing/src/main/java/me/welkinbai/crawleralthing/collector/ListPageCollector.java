@@ -3,10 +3,10 @@ package me.welkinbai.crawleralthing.collector;
 import me.welkinbai.crawleralthing.pagemodel.ListPage;
 import me.welkinbai.crawleralthing.pagemodel.PageManager;
 import me.welkinbai.crawleralthing.path.ListPath;
+import me.welkinbai.crawleralthing.path.Path;
 import me.welkinbai.crawleralthing.path.PathManager;
 import me.welkinbai.crawleralthing.path.PathType;
 import me.welkinbai.crawleralthing.path.RawPath;
-import me.welkinbai.crawleralthing.utils.CollectionUtils;
 import me.welkinbai.crawleralthing.utils.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -64,16 +64,28 @@ public class ListPageCollector implements Collector {
                     RawPath rawPath = new RawPath(url);
                     String title = extractTitle(aEle);
                     rawPath.setTitle(title);
-                    listPage.addPath(rawPath);
+                    Path sameUrlPathInPage = listPage.getSameUrlPathInPage(rawPath);
+                    if (sameUrlPathInPageNullOrNotFull(sameUrlPathInPage, rawPath)) {
+                        listPage.addPath(rawPath);
+                    }
                 }
             }
-            if (CollectionUtils.isNotEmpty(listPage.getPathsInPage())) {
+            if (!listPage.isEmpty()) {
                 pageManager.addPage(listPage);
             }
+            logger.info("collect done for path:{}", path);
+//            logger.info("listPage:{}", listPage);
         } catch (IOException e) {
             logger.error("meet IOException when doCollect.path:{}", path, e);
-
         }
+    }
+
+    private boolean sameUrlPathInPageNullOrNotFull(Path sameUrlPathInPage, RawPath rawPath) {
+        if (sameUrlPathInPage == null || sameUrlPathInPage.getPathType() != PathType.RAW_PATH) {
+            return true;
+        }
+        RawPath sameUrlPathInPageRaw = (RawPath) sameUrlPathInPage;
+        return StringUtils.isEmpty(sameUrlPathInPageRaw.getTitle()) && StringUtils.isNotEmpty(rawPath.getTitle());
     }
 
     private String extractTitle(Element aEle) {
