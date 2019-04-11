@@ -50,8 +50,10 @@ public class CollectorDispatcher implements Dispatcher, ApplicationContextAware 
             Collector aCollector = applicationContext.getBean(collectorConfig.getName(), Collector.class);
             collectorPool.add(aCollector);
             int threadCount = collectorConfig.getThreadCount();
-            ExecutorService executorService = Executors.newFixedThreadPool(threadCount,new CollectorThreadFactory(collectorConfig.getName()));
-            executorService.execute(aCollector);
+            ExecutorService executorService = Executors.newFixedThreadPool(threadCount, new CollectorThreadFactory(collectorConfig.getName()));
+            for (int i = 0; i < threadCount; i++) {
+                executorService.execute(aCollector);
+            }
             serviceMap.put(aCollector, executorService);
         }
     }
