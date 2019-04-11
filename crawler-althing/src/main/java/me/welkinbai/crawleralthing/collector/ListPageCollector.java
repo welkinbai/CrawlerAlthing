@@ -41,6 +41,7 @@ public class ListPageCollector implements Collector {
             } catch (InterruptedException e) {
                 logger.info("meet InterruptedException.", e);
                 Thread.interrupted();
+                throw new RuntimeException("meet InterruptedException.", e);
             } catch (Exception e) {
                 logger.error("meet Exception", e);
             }

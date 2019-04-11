@@ -11,4 +11,8 @@ public class CollectionUtils {
     public static <K, V> boolean isNotEmpty(Map<K, V> map) {
         return map != null && !map.isEmpty();
     }
+
+    public static <E> boolean isEmpty(Collection<E> collection) {
+        return collection == null || collection.isEmpty();
+    }
 }

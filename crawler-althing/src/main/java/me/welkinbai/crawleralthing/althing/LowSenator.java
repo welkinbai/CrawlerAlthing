@@ -1,4 +1,4 @@
 package me.welkinbai.crawleralthing.althing;
 
-public interface LowSenator {
+public interface LowSenator extends Senator{
 }

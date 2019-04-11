@@ -1,4 +1,4 @@
 package me.welkinbai.crawleralthing.althing;
 
-public interface Senator {
+public interface Senator extends Runnable {
 }

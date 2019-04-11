@@ -12,7 +12,8 @@ import java.util.List;
 public class Config {
 
     private List<String> dispatcher;
-    private List<CollectorConfig> collector;
+    private List<WorkerConfig> collector;
+    private List<WorkerConfig> senator;
 
     public List<String> getDispatcher() {
         return dispatcher;
@@ -22,15 +23,23 @@ public class Config {
         this.dispatcher = dispatcher;
     }
 
-    public List<CollectorConfig> getCollector() {
+    public List<WorkerConfig> getCollector() {
         return collector;
     }
 
-    public void setCollector(List<CollectorConfig> collector) {
+    public void setCollector(List<WorkerConfig> collector) {
         this.collector = collector;
     }
 
-    public static class CollectorConfig{
+    public List<WorkerConfig> getSenator() {
+        return senator;
+    }
+
+    public void setSenator(List<WorkerConfig> senator) {
+        this.senator = senator;
+    }
+
+    public static class WorkerConfig {
         private String name;
         private int threadCount = 1;
 
