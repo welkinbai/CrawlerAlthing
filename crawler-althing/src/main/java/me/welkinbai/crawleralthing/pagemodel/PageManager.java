@@ -3,8 +3,11 @@ package me.welkinbai.crawleralthing.pagemodel;
 import me.welkinbai.crawleralthing.path.PathType;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -23,5 +26,19 @@ public class PageManager {
         if (pages == null) {
             pageMap.put(pathType, new LinkedBlockingQueue<>());
         }
+    }
+
+    public List<Page> popAllPage() {
+        List<Page> allPage = new ArrayList<>();
+        for (Entry<PathType, BlockingQueue<Page>> entry : pageMap.entrySet()) {
+            BlockingQueue<Page> queue = entry.getValue();
+            if (queue != null) {
+                Page pageInQueue;
+                while ((pageInQueue = queue.poll()) != null) {
+                    allPage.add(pageInQueue);
+                }
+            }
+        }
+        return allPage;
     }
 }

@@ -35,6 +35,8 @@ public class DispatcherTrigger implements ApplicationContextAware {
                     Dispatcher aDispatcher = applicationContext.getBean(dispatcherName, Dispatcher.class);
                     dispatcherPool.add(aDispatcher);
                 }
+            } else {
+                logger.warn("注意！！没有配置任何调度器！！");
             }
         }
         for (Dispatcher dispatcher : dispatcherPool) {

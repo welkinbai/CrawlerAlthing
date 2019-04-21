@@ -1,6 +1,7 @@
 config:
   dispatcher:
     - "collectorDispatcher"
+    - "senatorDispatcher"
   collector:
     - name: "listPageCollector"
       threadCount: 4

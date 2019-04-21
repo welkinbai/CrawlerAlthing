@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -57,6 +58,6 @@ public class SenatorDispatcher extends AbstractDispatcher implements Dispatcher 
     }
 
     private List<WorkerConfig> getSenatorConfigs() {
-        return config.getSenator();
+        return config.getSenator() == null ? Collections.emptyList() : config.getSenator();
     }
 }
